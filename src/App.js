@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+//Bring in React Router stuffs here
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+
+//Bring in our components
+import Navbar from "./components/Layouts/Navbar";
+import Home from "./components/Pages/Home"
+import AddTodo from "./components/Pages/AddTodo";
+import AllTodos from "./components/Pages/AllTodos";
+import ReadSingleTodo from "./components/TodosComponents/ReadSingleTodo";
+import NotFound from "./components/Layouts/NotFound";
+
+
+//Bring in provider
+import { Provider } from './components/Context/todoContext'
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <Provider>
+      <Router>
+      <div className="App">
+      <Navbar />
+        <div className="container">
+          <Switch>
+            <Route exact path="/" component={ Home } />
+            <Route exact path="/add-todo" component={ AddTodo } />
+            <Route exact path="/all-todos" component={ AllTodos } />
+            <Route exact path="/todos/:id" component={ ReadSingleTodo } />
+            <Route component={ NotFound } />
+          </Switch>
+        </div>
+      </div>
+    </Router>
+   </Provider>
   );
 }
 
