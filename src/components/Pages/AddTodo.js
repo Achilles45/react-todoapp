@@ -6,6 +6,12 @@ import { Consumer } from '../Context/todoContext'
 //Bring in randomstring package
 import Randomstring from 'randomstring'
 
+//Bring in InputGroup Component
+import TextInputGroup from '../Layouts/TextInputGroup'
+
+//Bring in InputGroup Component
+import InputButton from '../Layouts/InputButton'
+
 export default class AddTodo extends Component {
 
     //State
@@ -14,7 +20,9 @@ export default class AddTodo extends Component {
         title: "",
         status: "",
         createdAt: "",
-        loadingText: ""
+        loadingText: "",
+        description: "",
+        errors: {}
     }
 
     //On state change methods 
@@ -30,6 +38,26 @@ export default class AddTodo extends Component {
         //Get values from the state
         const { title, description } = this.state;
 
+        //Check For Empty Fields
+        if( title === "" ) {
+            this.setState({
+                errors: {
+                    title: "Oga open your eyes 🤦‍♂️🤦‍♂️... Title is required"
+                }
+            })
+            return;
+        };
+
+        if( description === "" ) {
+            this.setState({
+                errors: {
+                    description: "Description is required too 🤷‍♂️🤷‍♀️"
+                }
+            })
+            return;
+        };
+
+
         this.loadingText = "Processing new todo..."
 
         // let today = new Date();
@@ -41,7 +69,7 @@ export default class AddTodo extends Component {
 
         //Now construct a new todo
         const newTodo = {
-            id: Randomstring.generate(4),
+            id: Randomstring.generate(10),
             title,
             description,
             status: "Undone",
@@ -54,14 +82,23 @@ export default class AddTodo extends Component {
             payload: newTodo
         })
 
+        //Clear state
+        this.setState({
+            title: "",
+            description: "",
+            errors: {}
+        })
+
         //Now redirect
         setTimeout(() => {
             this.props.history.push("/")
         }, 5000);
+
+        
     }
 
     render() {
-        const { title, description } = this.state;
+        const { title, description, errors } = this.state;
         return (
             <Consumer>
                 { value => {
@@ -73,29 +110,28 @@ export default class AddTodo extends Component {
                             <hr /><br />
                             <div className="col-md-12">
                                 <form onSubmit={this.onSubmit.bind(this, todoDispatcher)}>
-                                    <div className="form-group">
-                                        <label htmlFor="title">Title *</label>
-                                        <input type="text"
-                                        className="form-control"
+                                    <TextInputGroup 
+                                        label="Todo Title"
                                         name="title"
                                         placeholder="Enter todo title"
-                                        value={title}
-                                        onChange={this.onChange}
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="description">Description *</label>
-                                        <input type="text"
+                                        value={ title }
+                                        onChange={ this.onChange }
+                                        error={ errors.title }
+                                    />
+                                   <TextInputGroup 
+                                        label="Todo Description"
                                         name="description"
-                                        className="form-control"
                                         placeholder="Enter todo description"
-                                        value={description}
-                                        onChange={this.onChange}
-                                        />
-                                    </div>
+                                        value={ description }
+                                        onChange={ this.onChange }
+                                        error={ errors.description }
+                                   />
                                     { this.loadingText === null ? null : <p className="pt-2">{this.loadingText}</p> }
                                     <div className="form-group">
-                                    <input type="submit" className="btn btn-primary" value="Add Todo" />
+                                    <InputButton 
+                                    className="btn btn-primary"
+                                    value="Add New Todo"
+                                    />
                                     </div>
                                 </form>
                             </div>

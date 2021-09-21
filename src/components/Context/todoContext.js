@@ -17,6 +17,8 @@ const todoReducer = (state, action) =>{
                 ...state,
                 todos: [action.payload, ...state.todos]
             };
+            case "CHECK_OR_UN_CHECKED" : 
+            break
     
         default: return state
     }
