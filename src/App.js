@@ -10,7 +10,7 @@ import Navbar from "./components/Layouts/Navbar";
 import { Provider } from './components/Context/todoContext'
 
 //Bring in loading component
-import LoadingFallback from "./components/Layouts/LoadingFallback";
+// import LoadingFallback from "./components/Layouts/LoadingFallback";
 
 //Lazy load some components
 const Home = React.lazy(() => import('./components/Pages/Home'));
@@ -29,7 +29,7 @@ function App() {
         <div className="container">
           <Switch>
             { /*  Implement code spliting for all routes */ }
-            <Suspense fallback={ LoadingFallback }>
+            <Suspense fallback={ <p>Loading Component</p> }>
               <Route exact path="/" component={ Home } />
               <Route exact path="/about" component={ About } />
               <Route exact path="/add-todo" component={ AddTodo } />
