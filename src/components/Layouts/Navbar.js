@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-export default function Navbar(props) {
-    console.log(props)
+export default function Navbar() {
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
@@ -14,7 +13,10 @@ export default function Navbar(props) {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                     <li className="nav-item active">
-                        <Link className="nav-link" to="/">Recent Todos <span className="sr-only">(current)</span></Link>
+                        <Link className="nav-link" to="/about">About Todo Manager<span className="sr-only">(current)</span></Link>
+                    </li>
+                    <li className="nav-item active">
+                        <Link className="nav-link" to="/">Recent Todos </Link>
                     </li>
                     <li className="nav-item active">
                         <Link className="nav-link" to="/all-todos">All Todos</Link>
