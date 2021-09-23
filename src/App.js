@@ -1,25 +1,21 @@
-// import React, { Suspense } from "react";
+import React, { Suspense } from "react";
 
 //Bring in React Router stuffs here
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 //Bring in our components
 import Navbar from "./components/Layouts/Navbar";
-import Home from "./components/Pages/Home"
-import About from "./components/Pages/About"
-import AddTodo from "./components/Pages/AddTodo";
-import AllTodos from "./components/Pages/AllTodos";
-import ReadSingleTodo from "./components/TodosComponents/ReadSingleTodo";
-import NotFound from "./components/Layouts/NotFound";
-
-//Bring in Loading Component
-// import LoadingFallback from "./components/Layouts/LoadingFallback";
 
 //Bring in provider
 import { Provider } from './components/Context/todoContext'
 
 //Lazy load some components
-// const About = React.lazy(() => import('./components/Pages/About'));
+const Home = React.lazy(() => import('./components/Pages/Home'));
+const About = React.lazy(() => import('./components/Pages/About'));
+const AddTodo = React.lazy(() => import('./components/Pages/AddTodo'));
+const AllTodos = React.lazy(() => import('./components/Pages/AllTodos'));
+const ReadSingleTodo = React.lazy(() => import('./components/TodosComponents/ReadSingleTodo'));
+const NotFound = React.lazy(() => import('./components/Layouts/NotFound'));
 
 function App() {
   return (
@@ -29,20 +25,14 @@ function App() {
       <Navbar />
         <div className="container">
           <Switch>
-            <Route exact path="/" component={ Home } />
-            {/* <Route exact path="/about" component={ About } /> */}
-            <Route exact path="/add-todo" component={ AddTodo } />
-            <Route exact path="/all-todos" component={ AllTodos } />
-            <Route exact path="/todos/:id" component={ ReadSingleTodo } />
-            <Route exact path="/about" component={ About } />
-    
-            {/* <Route exact path="/about" render={() =>{
-              return (
-                <Suspense fallback={ LoadingFallback }>
-                  <About />
-                </Suspense>
-              )
-            }}/> */}
+            { /*  Implement code spliting for all routes */ }
+            <Suspense fallback={ <p>Loading component ...</p> }>
+              <Route exact path="/" component={ Home } />
+              <Route exact path="/about" component={ About } />
+              <Route exact path="/add-todo" component={ AddTodo } />
+              <Route exact path="/all-todos" component={ AllTodos } />
+              <Route exact path="/todos/:id" component={ ReadSingleTodo } />
+            </Suspense>
             <Route component={ NotFound } />
           </Switch>
         </div>
