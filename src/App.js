@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+// import React, { Suspense } from "react";
 
 //Bring in React Router stuffs here
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -6,20 +6,20 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //Bring in our components
 import Navbar from "./components/Layouts/Navbar";
 import Home from "./components/Pages/Home"
-// import About from "./components/Pages/About"
+import About from "./components/Pages/About"
 import AddTodo from "./components/Pages/AddTodo";
 import AllTodos from "./components/Pages/AllTodos";
 import ReadSingleTodo from "./components/TodosComponents/ReadSingleTodo";
 import NotFound from "./components/Layouts/NotFound";
 
 //Bring in Loading Component
-import LoadingFallback from "./components/Layouts/LoadingFallback";
+// import LoadingFallback from "./components/Layouts/LoadingFallback";
 
 //Bring in provider
 import { Provider } from './components/Context/todoContext'
 
 //Lazy load some components
-const About = React.lazy(() => import('./components/Pages/About'));
+// const About = React.lazy(() => import('./components/Pages/About'));
 
 function App() {
   return (
@@ -34,15 +34,15 @@ function App() {
             <Route exact path="/add-todo" component={ AddTodo } />
             <Route exact path="/all-todos" component={ AllTodos } />
             <Route exact path="/todos/:id" component={ ReadSingleTodo } />
-            {/* <Route exact path="/about" component={ About } /> */}
+            <Route exact path="/about" component={ About } />
     
-            <Route exact path="/about" render={() =>{
+            {/* <Route exact path="/about" render={() =>{
               return (
                 <Suspense fallback={ LoadingFallback }>
                   <About />
                 </Suspense>
               )
-            }}/>
+            }}/> */}
             <Route component={ NotFound } />
           </Switch>
         </div>
